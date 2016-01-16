@@ -3,12 +3,13 @@
 <head>
     <title>Vue Pagination Demo</title>
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <link href="http://cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
         <div class="col-md-12">
             <div id="example">
-                <pagination page-no="pageNo" page-size="pageSize" total-result="totalResult"></pagination>
+                <pagination page-no="1" page-size="2" total-result="13333"></pagination>
             </div>
         </div>
     </div>
@@ -16,7 +17,7 @@
     <script src="http://cdn.bootcss.com/vue/1.0.14/vue.min.js"></script>
     <script src="vue-pagination.js"></script>
 
-    <!-- 子组件模板 -->
+    <!-- bootstrap -->
     <template id="pagination">
         <nav>
             <ul class="pagination">
@@ -36,6 +37,23 @@
             </ul>
         </nav>
     </template>
+
+    <!-- semantic ui -->
+    <!--<template id="pagination">
+        <div class="ui pagination menu">
+            <a class="icon item" v-bind:class="{ 'disabled' : noPrevious }" v-on:click="selectPage(pageNo - 1)">
+                <i class="icon left arrow"></i>
+            </a>
+            <a class="item" v-for="page in pages"
+               v-bind:class="{ 'active': page.active, 'disabled': page.disabled }"
+               v-on:click="selectPage(page.number)">
+                {{page.text}}
+            </a>
+            <a class="icon item" v-bind:class="{ 'disabled': noNext }" v-on:click="selectPage(pageNo + 1)">
+                <i class="icon right arrow"></i>
+            </a>
+        </div>
+    </template>-->
 
     <script>
         // 创建根实例
