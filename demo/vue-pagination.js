@@ -3,6 +3,8 @@
     Vue.component('pagination', {
         //props: ['pageNo', 'pageSize', 'totalResult'],
         template: '#pagination',
+        replace: true,
+        inherit: false,
         data: function () {
             return {
                 pageNo: 1,
@@ -29,9 +31,9 @@
 
         },
         methods: {
-            selectPage: function (pageNo) {
-                if (this.pageNo != pageNo) {
-                    this.pageNo = pageNo;
+            selectPage: function (num) {
+                if (this.pageNo != num && num > 0) {
+                    this.pageNo = num;
                     this.$dispatch('page-change', this.pageNo);
                 }
             },
