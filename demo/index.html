@@ -1,0 +1,59 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Vue Pagination Demo</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-12">
+            <div id="example">
+                <pagination page-no="pageNo" page-size="pageSize" total-result="totalResult"></pagination>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://cdn.bootcss.com/vue/1.0.14/vue.min.js"></script>
+    <script src="vue-pagination.js"></script>
+
+    <!-- 子组件模板 -->
+    <template id="pagination">
+        <nav>
+            <ul class="pagination">
+                <li>
+                    <a style="cursor:pointer;" v-if="!noPrevious" v-on:click="selectPage(pageNo - 1)" aria-label="Previous">
+                        <span aria-hidden="true">上一页</span>
+                    </a>
+                </li>
+                <li v-for="page in pages" v-bind:class="{ 'active': page.active, 'disabled': page.disabled }">
+                    <a style="cursor:pointer;" v-on:click="selectPage(page.number)">{{page.text}}</a>
+                </li>
+                <li>
+                    <a style="cursor:pointer;" v-if="!noNext" v-on:click="selectPage(pageNo + 1)" aria-label="Next">
+                        <span aria-hidden="true">下一页</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </template>
+
+    <script>
+        // 创建根实例
+        new Vue({
+            el: '#example',
+            data: {
+                pageNo: 1,
+                pageSize: 10,
+                totalResult: 100,
+            },
+            // 在创建实例时 `events` 选项简单地调用 `$on`
+            events: {
+                'page-change': function (pageNo) {
+                    console.log('page-change', pageNo);
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>
