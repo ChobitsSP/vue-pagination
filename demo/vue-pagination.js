@@ -5,6 +5,10 @@
         template: '#pagination',
         replace: true,
         inherit: false,
+        data: {
+            num_display_entries: 6,
+            num_edge_entries: 2,
+        },
         computed: {
             noPrevious: function () {
                 return this.pageNo === 1;
@@ -24,6 +28,7 @@
             selectPage: function (num) {
                 if (this.pageNo != num && num > 0 && num <= this.totalPages) {
                     this.pageNo = num;
+                    this.$dispatch('page-change');
                 }
             },
         },
@@ -46,7 +51,6 @@
     */
     function getInterval(currentPage, pageCount) {
         var num_display_entries = 6;
-        var num_edge_entries = 2;
 
         var ne_half = Math.ceil(num_display_entries / 2);
         var np = pageCount;

@@ -4,15 +4,15 @@
     <title>Vue Pagination Demo</title>
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 </head>
-<body>
+<body id="example">
     <div class="container">
         <div class="col-md-12">
-            <div id="example">
-                <input type="number" v-model="pageNo" />
-                <input type="number" v-model="pageSize" />
-                <input type="number" v-model="totalResult" />
-
-                <pagination :page-no.sync="pageNo" :page-size.sync="pageSize" :total-result="totalResult"></pagination>
+            <div class="row">
+                <input type="number" readonly="readonly" value="{{pageNo}}" />
+                <input type="number" min="1" v-model="pageSize" />
+                <input type="number" min="0" v-model="totalResult" />
+                <button class="btn btn-default" v-on:click="search()">change totalResult</button>
+                <pagination class="text-center" v-on:page-change="pageChange(pageNo)" :page-no.sync="pageNo" :page-size.sync="pageSize" :total-result="totalResult"></pagination>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
 
     <!-- bootstrap -->
     <template id="pagination">
-        <nav>
+        <nav v-show="totalPages > 1">
             <ul class="pagination">
                 <li>
                     <a style="cursor:pointer;" v-if="!noPrevious" v-on:click="selectPage(pageNo - 1)" aria-label="Previous">
@@ -48,14 +48,24 @@
             data: {
                 pageNo: 1,
                 pageSize: 10,
-                totalResult: 100,
+                totalResult: 11,
             },
-            // 在创建实例时 `events` 选项简单地调用 `$on`
-            events: {
-                //'page-change': function (pageNo) {
-                //    console.log('page-change', pageNo);
-                //}
-            }
+            //// 在创建实例时 `events` 选项简单地调用 `$on`
+            //events: {
+            //    'page-change': function (pageNo) {
+            //        console.log('page-change', this.pageNo);
+            //    }
+            //},
+            methods: {
+                search: function () {
+                    //ajax
+                    this.pageNo = 1;
+                    this.totalResult = parseInt(Math.random() * 1000, 10)
+                },
+                pageChange: function (num) {
+                    console.log('pageChange', num);
+                },
+            },
         })
     </script>
 
