@@ -22,7 +22,7 @@
         },
         methods: {
             selectPage: function (num) {
-                if (this.pageNo != num && num > 0) {
+                if (this.pageNo != num && num > 0 && num <= this.totalPages) {
                     this.pageNo = num;
                 }
             },
