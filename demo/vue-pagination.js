@@ -1,14 +1,37 @@
 ﻿(function (Vue) {
 
     Vue.component('pagination', {
-        props: ['pageNo', 'pageSize', 'totalResult'],
+        //props: ['pageNo', 'pageSize', 'totalResult', 'displayNum', 'edgeNum'],
+        props: {
+            pageNo: {
+                type: Number,
+                //twoWay: true,
+                validator: function (value) {
+                    return value > 0
+                },
+                default: 1
+            },
+            pageSize: {
+                type: Number,
+                twoWay: true,
+                default: 10
+            },
+            totalResult: {
+                type: Number,
+                default: 0
+            },
+            displayNum: {
+                type: Number,
+                default: 6
+            },
+            edgeNum: {
+                type: Number,
+                default: 2
+            }
+        },
         template: '#pagination',
         replace: true,
         inherit: false,
-        data: {
-            num_display_entries: 6,
-            num_edge_entries: 2,
-        },
         computed: {
             noPrevious: function () {
                 return this.pageNo === 1;
@@ -17,7 +40,7 @@
                 return this.pageNo === this.totalPages;
             },
             pages: function () {
-                return getPages(this.pageNo, this.totalPages);
+                return getPages(this.pageNo, this.totalPages, this.edgeNum, this.displayNum);
             },
             totalPages: function () {
                 var totalPages = this.pageSize < 1 ? 1 : Math.ceil(this.totalResult / this.pageSize);
@@ -27,8 +50,7 @@
         methods: {
             selectPage: function (num) {
                 if (this.pageNo != num && num > 0 && num <= this.totalPages) {
-                    this.pageNo = num;
-                    this.$dispatch('page-change');
+                    this.$dispatch('page-change', num);
                 }
             },
         },
@@ -39,7 +61,6 @@
         return {
             number: number,
             text: text,
-            //active: isActive,
             disabled: text == '...',
         };
     }
@@ -49,9 +70,8 @@
     * currentPage and num_display_entries.
     * @return {Array}
     */
-    function getInterval(currentPage, pageCount) {
-        var num_display_entries = 6;
-
+    function getInterval(currentPage, pageCount, num_display_entries) {
+        //var num_display_entries = 6;
         var ne_half = Math.ceil(num_display_entries / 2);
         var np = pageCount;
         var upper_limit = np - num_display_entries;
@@ -60,11 +80,11 @@
         return [start, end];
     }
 
-    function getPages(currentPage, totalPages) {
+    function getPages(currentPage, totalPages, num_edge_entries, num_display_entries) {
         var ret = [];
-        var num_edge_entries = 2;
+        //var num_edge_entries = 2;
         var np = totalPages;
-        var interval = getInterval(currentPage - 1, totalPages);
+        var interval = getInterval(currentPage - 1, totalPages, num_display_entries);
 
         // Generate starting points
         if (interval[0] > 0 && num_edge_entries > 0) {

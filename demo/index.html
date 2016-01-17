@@ -11,14 +11,11 @@
                 <input type="number" readonly="readonly" value="{{pageNo}}" />
                 <input type="number" min="1" v-model="pageSize" />
                 <input type="number" min="0" v-model="totalResult" />
-                <button class="btn btn-default" v-on:click="search()">change totalResult</button>
-                <pagination class="text-center" v-on:page-change="pageChange(pageNo)" :page-no.sync="pageNo" :page-size.sync="pageSize" :total-result="totalResult"></pagination>
+                <button class="btn btn-default" v-on:click="query()">query data by filter</button>
+                <pagination class="text-center" v-on:page-change="pageChange" :page-no="pageNo" :page-size.sync="pageSize" :total-result="totalResult"></pagination>
             </div>
         </div>
     </div>
-
-    <script src="http://cdn.bootcss.com/vue/1.0.14/vue.min.js"></script>
-    <script src="vue-pagination.js"></script>
 
     <!-- bootstrap -->
     <template id="pagination">
@@ -41,6 +38,9 @@
         </nav>
     </template>
 
+    <script src="http://cdn.bootcss.com/vue/1.0.14/vue.min.js"></script>
+    <script src="vue-pagination.js"></script>
+
     <script>
         // 创建根实例
         new Vue({
@@ -50,19 +50,15 @@
                 pageSize: 10,
                 totalResult: 11,
             },
-            //// 在创建实例时 `events` 选项简单地调用 `$on`
-            //events: {
-            //    'page-change': function (pageNo) {
-            //        console.log('page-change', this.pageNo);
-            //    }
-            //},
             methods: {
-                search: function () {
+                query: function () {
                     //ajax
                     this.pageNo = 1;
-                    this.totalResult = parseInt(Math.random() * 1000, 10)
+                    this.pageSize = parseInt(Math.random() * 10, 10);
+                    this.totalResult = parseInt(Math.random() * 1000, 10);
                 },
                 pageChange: function (num) {
+                    this.pageNo = num;
                     console.log('pageChange', num);
                 },
             },
