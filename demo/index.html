@@ -24,14 +24,14 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in items" track-by="id">
-                                <td>{{item.id}}</td>
-                                <td>{{item.name}}</td>
+                                <td v-text="item.id"></td>
+                                <td v-text="item.name"></td>
                             </tr>
                         </tbody>
                         <tfoot v-show="totalResult > pageSize">
                             <tr>
                                 <td colspan="999" class="text-center">
-                                    <pagination class="text-center" tpl="#pagination" v-on:page-change="pageChange" :page-no="pageNo" :page-size.sync="pageSize" :total-result="totalResult"></pagination>
+                                    <pagination class="text-center" tpl="#pagination" v-on:page-change="pageChange" :page-no="pageNo" :page-size="pageSize" :total-result="totalResult"></pagination>
                                 </td>
                             </tr>
                         </tfoot>
@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li v-for="page in pages" v-bind:class="{ 'active': page.number == pageNo, 'disabled': page.disabled }">
-                    <a style="cursor:pointer;" v-on:click="selectPage(page.number)">{{page.text}}</a>
+                    <a style="cursor:pointer;" v-on:click="selectPage(page.number)" v-text="page.text"></a>
                 </li>
                 <li>
                     <a style="cursor:pointer;" v-if="!noNext" v-on:click="selectPage(pageNo + 1)" aria-label="Next">
@@ -70,7 +70,7 @@
         </nav>
     </template>
 
-    <link href="http://cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet">
+    <!--<link href="http://cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet">-->
     <!-- semantic -->
     <template id="pagination2">
         <div class="ui pagination menu">
@@ -126,8 +126,6 @@
                     for (var i = (num - 1) * this.pageSize; i < num * this.pageSize; i++) {
                         this.items.push({ id: i + 1, name: 'name' + i });
                     }
-
-                    console.log('pageChange', num);
                 },
             },
         })

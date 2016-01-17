@@ -1,11 +1,9 @@
 ﻿(function (Vue) {
 
     Vue.component('pagination', {
-        //props: ['pageNo', 'pageSize', 'totalResult', 'displayNum', 'edgeNum'],
         props: {
             pageNo: {
                 type: Number,
-                //twoWay: true,
                 validator: function (value) {
                     return value > 0
                 },
@@ -13,7 +11,9 @@
             },
             pageSize: {
                 type: Number,
-                twoWay: true,
+                validator: function (value) {
+                    return value > 0
+                },
                 default: 10
             },
             totalResult: {
@@ -47,8 +47,7 @@
                 return getPages(this.pageNo, this.totalPages, this.edgeNum, this.displayNum);
             },
             totalPages: function () {
-                var totalPages = this.pageSize < 1 ? 1 : Math.ceil(this.totalResult / this.pageSize);
-                return Math.max(totalPages || 0, 1);
+                return getTotalPages(this.pageSize, this.totalResult);
             },
         },
         methods: {
@@ -57,8 +56,21 @@
                     this.$dispatch('page-change', num);
                 }
             },
+            selectSize: function (size) {
+                if (this.pageSize != size && size > 0) {
+                    var totalPages = getTotalPages(size, this.totalResult);
+                    if (this.pageNo <= totalPages) {
+                        this.$dispatch('size-change', size);
+                    }
+                }
+            },
         },
     });
+
+    function getTotalPages(pageSize, totalResult) {
+        var totalPages = pageSize < 1 ? 1 : Math.ceil(totalResult / pageSize);
+        return Math.max(totalPages || 0, 1);
+    }
 
     // Create page object used in template
     function makePage(number, text, isActive) {
