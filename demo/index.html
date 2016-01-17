@@ -7,9 +7,9 @@
     <div class="container">
         <div class="col-md-12">
             <div class="row">
-                <input type="number" readonly="readonly" value="{{pageNo}}" />
-                <input type="number" min="1" v-model="pageSize" />
-                <input type="number" min="0" v-model="totalResult" />
+                <input type="number" number min="1" v-model="pageNo" />
+                <input type="number" number min="1" v-model="pageSize" />
+                <input type="number" number min="0" v-model="totalResult" />
                 <button class="btn btn-default" v-on:click="query()">query data by filter</button>
                 <pagination class="text-center" tpl="#pagination2" v-on:page-change="pageChange" :page-no="pageNo" :page-size.sync="pageSize" :total-result="totalResult"></pagination>
             </div>
