@@ -65,7 +65,7 @@
         return {
             number: number,
             text: text,
-            disabled: text == '...',
+            disabled: number === -1,
         };
     }
 
@@ -87,6 +87,7 @@
     function getPages(currentPage, totalPages, num_edge_entries, num_display_entries) {
         var ret = [];
         //var num_edge_entries = 2;
+        var skip_text = '...';
         var np = totalPages;
         var interval = getInterval(currentPage - 1, totalPages, num_display_entries);
 
@@ -98,7 +99,7 @@
                 ret.push(page);
             }
             if (num_edge_entries < interval[0]) {
-                var page = makePage(-1, '...');
+                var page = makePage(-1, skip_text);
                 ret.push(page);
             }
         }
@@ -110,7 +111,7 @@
         // Generate ending points
         if (interval[1] < np && num_edge_entries > 0) {
             if (np - num_edge_entries > interval[1]) {
-                var page = makePage(-1, '...');
+                var page = makePage(-1, skip_text);
                 ret.push(page);
             }
             var begin = Math.max(np - num_edge_entries, interval[1]);
