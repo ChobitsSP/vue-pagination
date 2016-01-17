@@ -74,8 +74,8 @@
                 query: function () {
                     //ajax
                     this.pageNo = 1;
-                    this.pageSize = parseInt(Math.random() * 10, 10);
-                    this.totalResult = parseInt(Math.random() * 1000, 10);
+                    this.pageSize = getRandomInt(1, 10);
+                    this.totalResult = getRandomInt(0, 1000);
                 },
                 pageChange: function (num) {
                     this.pageNo = num;
@@ -83,6 +83,14 @@
                 },
             },
         })
+
+        /**
+         * Returns a random integer between min (inclusive) and max (inclusive)
+         * Using Math.round() will give you a non-uniform distribution!
+         */
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
     </script>
 
 </body>
