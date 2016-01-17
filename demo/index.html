@@ -3,13 +3,16 @@
 <head>
     <title>Vue Pagination Demo</title>
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-    <link href="http://cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
         <div class="col-md-12">
             <div id="example">
-                <pagination page-no="1" page-size="2" total-result="13333"></pagination>
+                <input type="number" v-model="pageNo" />
+                <input type="number" v-model="pageSize" />
+                <input type="number" v-model="totalResult" />
+
+                <pagination :page-no.sync="pageNo" :page-size.sync="pageSize" :total-result="totalResult"></pagination>
             </div>
         </div>
     </div>
@@ -26,7 +29,7 @@
                         <span aria-hidden="true">上一页</span>
                     </a>
                 </li>
-                <li v-for="page in pages" v-bind:class="{ 'active': page.active, 'disabled': page.disabled }">
+                <li v-for="page in pages" v-bind:class="{ 'active': page.number == pageNo, 'disabled': page.disabled }">
                     <a style="cursor:pointer;" v-on:click="selectPage(page.number)">{{page.text}}</a>
                 </li>
                 <li>
@@ -37,23 +40,6 @@
             </ul>
         </nav>
     </template>
-
-    <!-- semantic ui -->
-    <!--<template id="pagination">
-        <div class="ui pagination menu">
-            <a class="icon item" v-bind:class="{ 'disabled' : noPrevious }" v-on:click="selectPage(pageNo - 1)">
-                <i class="icon left arrow"></i>
-            </a>
-            <a class="item" v-for="page in pages"
-               v-bind:class="{ 'active': page.active, 'disabled': page.disabled }"
-               v-on:click="selectPage(page.number)">
-                {{page.text}}
-            </a>
-            <a class="icon item" v-bind:class="{ 'disabled': noNext }" v-on:click="selectPage(pageNo + 1)">
-                <i class="icon right arrow"></i>
-            </a>
-        </div>
-    </template>-->
 
     <script>
         // 创建根实例
@@ -66,9 +52,9 @@
             },
             // 在创建实例时 `events` 选项简单地调用 `$on`
             events: {
-                'page-change': function (pageNo) {
-                    console.log('page-change', pageNo);
-                }
+                //'page-change': function (pageNo) {
+                //    console.log('page-change', pageNo);
+                //}
             }
         })
     </script>
