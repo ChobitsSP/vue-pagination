@@ -27,7 +27,11 @@
             edgeNum: {
                 type: Number,
                 default: 2
-            }
+            },
+            tpl: {},
+        },
+        created: function () {
+            this.$options.template = this.tpl || '#pagination';
         },
         template: '#pagination',
         replace: true,

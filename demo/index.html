@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Vue Pagination Demo</title>
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 </head>
 <body id="example">
     <div class="container">
@@ -12,11 +11,12 @@
                 <input type="number" min="1" v-model="pageSize" />
                 <input type="number" min="0" v-model="totalResult" />
                 <button class="btn btn-default" v-on:click="query()">query data by filter</button>
-                <pagination class="text-center" v-on:page-change="pageChange" :page-no="pageNo" :page-size.sync="pageSize" :total-result="totalResult"></pagination>
+                <pagination class="text-center" tpl="#pagination2" v-on:page-change="pageChange" :page-no="pageNo" :page-size.sync="pageSize" :total-result="totalResult"></pagination>
             </div>
         </div>
     </div>
 
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
     <!-- bootstrap -->
     <template id="pagination">
         <nav v-show="totalPages > 1">
@@ -38,17 +38,46 @@
         </nav>
     </template>
 
-    <script src="http://cdn.bootcss.com/vue/1.0.14/vue.min.js"></script>
+    <link href="http://cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet">
+    <!-- semantic -->
+    <template id="pagination2">
+        <div class="ui pagination menu">
+            <a class="icon item" v-bind:class="{ 'disabled': noPrevious }" v-on:click="selectPage(pageNo - 1)">
+                <i class="icon left arrow"></i>
+            </a>
+            <a class="item" v-for="page in pages" track-by="$index"
+               v-bind:class="{ 'active': page.number == pageNo, 'disabled': page.disabled }"
+               v-on:click="selectPage(page.number)">
+                {{page.text}}
+            </a>
+            <a class="icon item" v-bind:class="{ 'disabled': noNext }" v-on:click="selectPage(pageNo + 1)">
+                <i class="icon right arrow"></i>
+            </a>
+        </div>
+    </template>
+
+    <script src="http://cdn.bootcss.com/vue/1.0.14/vue.js"></script>
     <script src="vue-pagination.js"></script>
 
     <script>
+        // 局部注册也可以这么做
+        var Parent = Vue.extend({
+            components: {
+                'pagination': {
+                    template: '#pagination2'
+                }
+            }
+        })
+
         // 创建根实例
         new Vue({
             el: '#example',
-            data: {
-                pageNo: 1,
-                pageSize: 10,
-                totalResult: 11,
+            data: function () {
+                return {
+                    pageNo: 1,
+                    pageSize: 10,
+                    totalResult: 11,
+                };
             },
             methods: {
                 query: function () {
