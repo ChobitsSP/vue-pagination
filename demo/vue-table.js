@@ -40,16 +40,16 @@
                     this.loading = false;
                 });
             },
-            //orderChange: function (colName) {
-            //    if (this.orderBy == colName) {
-            //        this.isDesc = !this.isDesc;
-            //    }
-            //    else {
-            //        this.orderBy = colName;
-            //        this.isDesc = false;
-            //    }
-            //    this.$dispatch('order-change', colName, this.isDesc);
-            //},
+            orderChange: function (colName) {
+                if (this.orderBy == colName) {
+                    this.isDesc = !this.isDesc;
+                }
+                else {
+                    this.orderBy = colName;
+                    this.isDesc = false;
+                }
+                this.queryChange();
+            },
         },
     });
 
