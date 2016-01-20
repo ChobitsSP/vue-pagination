@@ -10,7 +10,7 @@
             return {
                 items: [],
                 pageNo: 1,
-                pageSize: 5,
+                pageSize: 10,
                 totalResult: 0,
                 orderBy: null,
                 isDesc: false,

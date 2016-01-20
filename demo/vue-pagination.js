@@ -28,12 +28,8 @@
                 type: Number,
                 default: 2
             },
-            tpl: {},
         },
-        created: function () {
-            this.$options.template = this.tpl || '#pagination';
-        },
-        template: '#pagination',
+        template: '"<nav v-show=\"totalPages > 1\"><ul class=\"pagination\"><li><a style=\"cursor:pointer;\"v-if=\"!noPrevious\"v-on:click=\"selectPage(pageNo - 1)\"aria-label=\"Previous\"><span aria-hidden=\"true\">‹</span></a></li><li v-for=\"page in pages\"v-bind:class=\"{ \'active\': page.number == pageNo, \'disabled\': page.disabled }\"><a style=\"cursor:pointer;\"v-on:click=\"selectPage(page.number)\"v-text=\"page.text\"></a></li><li><a style=\"cursor:pointer;\"v-if=\"!noNext\"v-on:click=\"selectPage(pageNo + 1)\"aria-label=\"Next\"><span aria-hidden=\"true\">›</span></a></li></ul></nav>"',
         replace: true,
         inherit: false,
         computed: {
