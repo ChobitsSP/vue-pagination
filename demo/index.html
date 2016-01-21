@@ -10,7 +10,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12" v-cloak>
-                    <v-table url="http://pokeapi.co/api/v1/ability"></v-table>
+                    <v-table tpl="#table-tpl1" url="http://pokeapi.co/api/v1/ability"></v-table>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
     <script src="vue-pagination.js"></script>
     <script src="vue-table.js"></script>
 
-    <template id="table-tpl">
+    <template id="table-tpl1">
         <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr role="row">
@@ -31,20 +31,25 @@
                     <th>created</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody v-show="!loading">
                 <tr v-for="item in items">
                     <td v-text="item.id"></td>
                     <td v-text="item.name"></td>
                     <td>
                         <a href="http://pokeapi.co{{item.resource_uri}}">{{item.resource_uri}}</a>
                     </td>
-                    <td >{{item.created | ISODate}}</td>
+                    <td>{{item.created | ISODate}}</td>
+                </tr>
+            </tbody>
+            <tbody v-show="loading">
+                <tr>
+                    <td colspan="999" class="text-center">loading ... </td>
                 </tr>
             </tbody>
             <tfoot v-show="totalResult > pageSize">
                 <tr>
                     <td colspan="999" class="text-center">
-                        <pagination class="text-center" tpl="#pagination" v-on:page-change="pageChange" :page-no="pageNo" :page-size="pageSize" :total-result="totalResult"></pagination>
+                        <pagination v-on:page-change="pageChange" :page-no="pageNo" :page-size="pageSize" :total-result="totalResult"></pagination>
                     </td>
                 </tr>
             </tfoot>
@@ -59,6 +64,12 @@
         // 创建根实例
         new Vue({
             el: '#example',
+            methods: {
+                click_me: function (item) {
+
+                    console.log(item);
+                }
+            },
         });
 
         /**
