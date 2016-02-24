@@ -1,0 +1,38 @@
+﻿<template>
+    <div class="fixed-table-pagination" style="display: block;">
+        <div class="pull-left pagination-detail">
+            <span class="pagination-info">显示第 {{(pageNo - 1) * pageSize + 1}} 到第 {{0}} 条记录，总共 {{totalResult}} 条记录</span>
+            <span class="page-list">
+                每页显示
+                <span class="btn-group dropup">
+                    <button type="button" class="btn btn-default  dropdown-toggle" data-toggle="dropdown">
+                        <span class="page-size">{{pageSize}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li v-bind:class="{ 'active': pageSize == size }" v-for="size in [1,2,3,4,5,10,25,50,100]">
+                            <a v-on:click="selectSize(size)" v-text="size"></a>
+                        </li>
+                    </ul>
+                </span> 条记录
+            </span>
+        </div>
+        <div class="pull-right pagination" ng-show="totalResult > pageSize">
+            <ul class="pagination">
+                <li v-if="!noPrevious">
+                    <a style="cursor:pointer;" v-on:click="selectPage(pageNo - 1)" aria-label="Previous">
+                        <span aria-hidden="true">‹</span>
+                    </a>
+                </li>
+                <li v-for="page in pages" v-bind:class="{ 'active': page.number == pageNo, 'disabled': page.disabled }">
+                    <a style="cursor:pointer;" v-on:click="selectPage(page.number)" v-text="page.text"></a>
+                </li>
+                <li v-if="!noNext">
+                    <a style="cursor:pointer;" v-on:click="selectPage(pageNo + 1)" aria-label="Next">
+                        <span aria-hidden="true">›</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>

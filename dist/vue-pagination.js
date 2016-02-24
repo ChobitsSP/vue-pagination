@@ -59,7 +59,7 @@
                 if (this.pageSize != size && size > 0) {
                     this.pageSize = size;
                     if (this.pageNo > this.totalPages) {
-                        selectPage(this.totalPages);
+                        this.selectPage(this.totalPages);
                     }
                     else {
                         this.$dispatch('page-change');

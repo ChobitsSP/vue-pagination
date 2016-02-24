@@ -31,7 +31,8 @@
                 default: 2
             },
         },
-        template: "<nav v-show=\"totalPages > 1\"><ul class=\"pagination\"><li v-if=\"!noPrevious\"><a style=\"cursor:pointer;\"v-on:click=\"selectPage(pageNo - 1)\"aria-label=\"Previous\"><span aria-hidden=\"true\">‹</span></a></li><li v-for=\"page in pages\"v-bind:class=\"{ \'active\': page.number == pageNo, \'disabled\': page.disabled }\"><a style=\"cursor:pointer;\"v-on:click=\"selectPage(page.number)\"v-text=\"page.text\"></a></li><li v-if=\"!noNext\"><a style=\"cursor:pointer;\"v-on:click=\"selectPage(pageNo + 1)\"aria-label=\"Next\"><span aria-hidden=\"true\">›</span></a></li></ul></nav>",
+        template: '#pager',
+        //template: "<nav v-show=\"totalPages > 1\"><ul class=\"pagination\"><li v-if=\"!noPrevious\"><a style=\"cursor:pointer;\"v-on:click=\"selectPage(pageNo - 1)\"aria-label=\"Previous\"><span aria-hidden=\"true\">‹</span></a></li><li v-for=\"page in pages\"v-bind:class=\"{ \'active\': page.number == pageNo, \'disabled\': page.disabled }\"><a style=\"cursor:pointer;\"v-on:click=\"selectPage(page.number)\"v-text=\"page.text\"></a></li><li v-if=\"!noNext\"><a style=\"cursor:pointer;\"v-on:click=\"selectPage(pageNo + 1)\"aria-label=\"Next\"><span aria-hidden=\"true\">›</span></a></li></ul></nav>",
         replace: true,
         inherit: false,
         computed: {
@@ -59,7 +60,7 @@
                 if (this.pageSize != size && size > 0) {
                     this.pageSize = size;
                     if (this.pageNo > this.totalPages) {
-                        selectPage(this.totalPages);
+                        this.selectPage(this.totalPages);
                     }
                     else {
                         this.$dispatch('page-change');
