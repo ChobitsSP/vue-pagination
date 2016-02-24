@@ -21,7 +21,7 @@
     <script src="vue-pagination.js"></script>
     <script src="vue-table.js"></script>
 
-    <template id="table-tpl1">
+    <template id="table-tpl">
         <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr role="row">
@@ -49,7 +49,7 @@
             <tfoot v-show="totalResult > pageSize">
                 <tr>
                     <td colspan="999" class="text-center">
-                        <pagination v-on:page-change="pageChange" :page-no="pageNo" :page-size="pageSize" :total-result="totalResult"></pagination>
+                        <pagination v-on:page-change="pageChange" :page-no.sync="pageNo" :page-size.sync="pageSize" :total-result="totalResult"></pagination>
                     </td>
                 </tr>
             </tfoot>

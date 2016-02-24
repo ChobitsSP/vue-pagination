@@ -27,10 +27,9 @@
             queryChange: function () {
                 this.pageChange(1);
             },
-            pageChange: function (num) {
+            pageChange: function () {
                 if (this.loading) return;
                 this.loading = true;
-                this.pageNo = num;
                 this.$http.get(this.url, {
                     limit: this.pageSize,
                     offset: (this.pageNo - 1) * this.pageSize,
