@@ -23,6 +23,7 @@
     module.exports = {
         props: {
             pageNo: {
+                twoWay: true,
                 type: Number,
                 validator: function (value) {
                     return value > 0
@@ -30,6 +31,7 @@
                 default: 1
             },
             pageSize: {
+                twoWay: true,
                 type: Number,
                 validator: function (value) {
                     return value > 0
@@ -68,14 +70,18 @@
         methods: {
             selectPage: function (num) {
                 if (this.pageNo != num && num > 0 && num <= this.totalPages) {
-                    this.$dispatch('page-change', num);
+                    this.pageNo = num;
+                    this.$dispatch('page-change');
                 }
             },
             selectSize: function (size) {
                 if (this.pageSize != size && size > 0) {
-                    var totalPages = getTotalPages(size, this.totalResult);
-                    if (this.pageNo <= totalPages) {
-                        this.$dispatch('size-change', size);
+                    this.pageSize = size;
+                    if (this.pageNo > this.totalPages) {
+                        selectPage(this.totalPages);
+                    }
+                    else {
+                        this.$dispatch('page-change');
                     }
                 }
             },
