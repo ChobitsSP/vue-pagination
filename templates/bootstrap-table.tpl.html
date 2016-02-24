@@ -1,7 +1,7 @@
 ﻿<template>
     <div class="fixed-table-pagination" style="display: block;">
         <div class="pull-left pagination-detail">
-            <span class="pagination-info">显示第 {{(pageNo - 1) * pageSize + 1}} 到第 {{0}} 条记录，总共 {{totalResult}} 条记录</span>
+            <span class="pagination-info">显示第 {{startIndex}} 到第 {{endIndex}} 条记录，总共 {{totalResult}} 条记录</span>
             <span class="page-list">
                 每页显示
                 <span class="btn-group dropup">

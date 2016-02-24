@@ -66,6 +66,12 @@
             totalPages: function () {
                 return getTotalPages(this.pageSize, this.totalResult);
             },
+            startIndex: function () {
+                return Math.min(this.totalResult, (this.pageNo - 1) * this.pageSize + 1);
+            },
+            endIndex: function () {
+                return Math.min(this.totalResult, this.pageNo * this.pageSize);
+            }
         },
         methods: {
             selectPage: function (num) {
