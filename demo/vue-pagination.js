@@ -52,7 +52,7 @@
             selectPage: function (num) {
                 if (this.pageNo != num && num > 0 && num <= this.totalPages) {
                     this.pageNo = num;
-                    this.$dispatch('page-change');
+                    this.$emit('page-change');
                 }
             },
             selectSize: function (size) {
@@ -62,7 +62,7 @@
                         this.selectPage(this.totalPages);
                     }
                     else {
-                        this.$dispatch('page-change');
+                        this.$emit('page-change');
                     }
                 }
             },
