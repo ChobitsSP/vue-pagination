@@ -6,7 +6,7 @@
                     <span aria-hidden="true">‹</span>
                 </a>
             </li>
-            <li v-for="page in pages" v-bind:class="{ \'active\': page.number == pageNo, \'disabled\': page.disabled }">
+            <li v-for="page in pages" v-bind:class="{ 'active': page.number == pageNo, 'disabled': page.disabled }">
                 <a style="cursor:pointer;" v-on:click="selectPage(page.number)" v-text="page.text"></a>
             </li>
             <li v-if="!noNext">
